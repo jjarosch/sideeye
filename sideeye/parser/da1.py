@@ -120,11 +120,7 @@ def parse(filename,
     def parse_fixations(line, item):
         """Parses a list of (x, y, start time, end time) numbers into a list of Fixations."""
         fixations = []
-        for pos in range(0, len(line), 4):
-            x_pos = line[pos]
-            y_pos = line[pos + 1]
-            start = line[pos + 2]
-            end = line[pos + 3]
+        for x_pos, y_pos, start, end in zip(*[iter(line)]*4):
             if (end - start) > min_cutoff and (max_cutoff < 0 or (end - start) < max_cutoff):
                 fixations += [Fixation(Point(x_pos, y_pos),
                                        start,
